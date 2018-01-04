@@ -22,7 +22,7 @@ var Giphytastic =
   {
     var button;
 
-    button = $('<button class="btn btn-success subject float-left mr-2">'+button+'</button>');
+    button = $('<button class="btn btn-success subject float-left mr-2 mb-2">'+button+'</button>');
     this.d_buttons.append(button);
   },
   // method to display all buttons
