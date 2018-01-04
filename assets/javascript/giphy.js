@@ -35,7 +35,7 @@ var Giphytastic =
     }
   },
   // method to get GIFs of the given subject
-  random_gifs: function (subject)
+  fetch_gifs: function (subject)
   {
     // clear the display
     Giphytastic.d_gifs.empty();
@@ -51,19 +51,28 @@ var Giphytastic =
 
       for (var i = 0; i < Giphytastic.limit; ++i)
       {
-        gif = $('<img>',
-          {
-            id:    i+'gif',
-            class: 'giphy',
-            src:   response.data[i].images.fixed_width_still.url,
-          });
-        gif.css('margin', '0 20px 20px 0');
-        Giphytastic.d_gifs.append(gif);
+        gif = '<img id="'+i+'gif" class="card-img-top giphy" src='+response.data[i].images.fixed_width_still.url+' alt="'+response.data[i].images.fixed_width_still.url+'"/>';
+
+        // Model for an Image Card
+        // <div id="card"+i class="card float-left mr-2 mb-2">
+        //   <div class="card-body">
+        //     <img/>
+        //     <p id="rating"+i class="card-text text-center">Rating:+response.data[i].rating.touppercase()</p>
+        //   </div>
+        // </div>
+
+        card = $('<div id="card"+i class="card float-left mr-2 mb-2">'
+          +'<div class="card-body">'
+            +gif
+            +'<p id="rating"'+i+' class="card-text text-center">Rating: '+response.data[i].rating.toUpperCase()+'</p>'
+          +'</div>'
+        +'</div>');
+
+        Giphytastic.d_gifs.append(card);
         // set to not animating
         Giphytastic.cur_animating[i] = false;
       }
     });
-
   },
 };
 
@@ -79,7 +88,7 @@ Giphytastic.display_all_buttons();
 // Click function for the start buttons
 Giphytastic.d_buttons.on('click', 'button.subject', function()
 {
-  Giphytastic.random_gifs($(this).text());
+  Giphytastic.fetch_gifs($(this).text());
 });
 
 // Click function for the start buttons
