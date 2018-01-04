@@ -2,6 +2,7 @@ var Giphytastic =
 {
   // DOM elements to update, jQuery handles
   d_buttons:    $("#buttons"),
+  d_form:       $("#form"),
   d_gifs:       $("#gifs"),
   // array of button names
   buttons: ["Star Trek", "Star Wars", "The Matrix", "The Expanse", "Continuum", "Dark Matter", "Agents of SHIELD", "The Magicians", "Stranger Things"],
@@ -20,9 +21,7 @@ var Giphytastic =
   // method to display a button
   display_button: function (button)
   {
-    var button;
-
-    button = $('<button class="btn btn-success subject float-left mr-2 mb-2">'+button+'</button>');
+    var button = $('<button class="btn btn-success subject float-left mr-2 mb-2">'+button+'</button>');
     this.d_buttons.append(button);
   },
   // method to display all buttons
@@ -33,6 +32,17 @@ var Giphytastic =
     {
       this.display_button(this.buttons[i]);
     }
+  },
+  // method to display the form
+  display_form: function ()
+  {
+    this.d_form.empty();
+    var form = $('<form>'
+        +'<label for="subject_in" class="mr-1">Add a Subject:</label>'
+        +'<input type="text" id="subject_in"><br>'
+        +'<button type="submit" class="btn submit btn-primary">Submit</button>'
+      +'</form>');
+    this.d_form.append(form);
   },
   // method to get GIFs of the given subject
   fetch_gifs: function (subject)
@@ -82,6 +92,7 @@ var Giphytastic =
 // Mainline Code
 //
 Giphytastic.display_all_buttons();
+Giphytastic.display_form();
 
 //
 // Event Functions
@@ -109,6 +120,21 @@ Giphytastic.d_gifs.on('click', 'img.giphy', function()
     $('#'+this.id).attr('src', Giphytastic.cur_gifs[num].images.fixed_width.url);
     Giphytastic.cur_animating[num] = true;
   }
+});
+
+// This function handles events where a movie button is clicked
+Giphytastic.d_form.on("click", 'button.submit', function(event)
+{
+  // prevent reload of page
+  event.preventDefault();
+  // grab the input from the textbox
+  var subject = $("#subject_in").val().trim();
+  // add the button to the array (future-proof the app so it works with display_all_buttons)
+  Giphytastic.buttons.push(subject);
+  // display the new button
+  Giphytastic.display_button(subject);
+  // now clear the form
+  $("#subject_in").val("");
 });
 
 //
