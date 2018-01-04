@@ -13,10 +13,12 @@ var Giphytastic =
   // currently animating - array to hold booleans
   cur_animating: [false],
   // method to add a button
-  add_button: function ()
+  add_button: function (subject)
   {
-    // append to bottons array
-    // display the button
+    // add the button to the array (future-proof the app so it works with display_all_buttons)
+    this.buttons.push(subject);
+    // display the new button
+    this.display_button(subject);
   },
   // method to display a button
   display_button: function (button)
@@ -39,7 +41,7 @@ var Giphytastic =
     this.d_form.empty();
     var form = $('<form>'
         +'<label for="subject_in" class="mr-1">Add a Subject:</label>'
-        +'<input type="text" id="subject_in"><br>'
+        +'<input type="text" id="subject_in" class="mb-2"><br>'
         +'<button type="submit" class="btn submit btn-primary">Submit</button>'
       +'</form>');
     this.d_form.append(form);
@@ -72,7 +74,7 @@ var Giphytastic =
         // </div>
 
         card = $('<div class="col-sm-3">'
-            +'<div id="card"+i class="card mb-2">'
+          +'<div id="card"+i class="card mb-2">'
             +'<div class="card-body">'
               +gif
               +'<p id="rating"'+i+' class="card-text text-center">Rating: '+response.data[i].rating.toUpperCase()+'</p>'
@@ -129,10 +131,8 @@ Giphytastic.d_form.on("click", 'button.submit', function(event)
   event.preventDefault();
   // grab the input from the textbox
   var subject = $("#subject_in").val().trim();
-  // add the button to the array (future-proof the app so it works with display_all_buttons)
-  Giphytastic.buttons.push(subject);
-  // display the new button
-  Giphytastic.display_button(subject);
+  // add the button
+  Giphytastic.add_button(subject);
   // now clear the form
   $("#subject_in").val("");
 });
