@@ -1,0 +1,16 @@
+*
+{
+  color: #222;
+  text-shadow: 1px 1px #ddd;
+  font-family: 'Arimo', sans-serif;
+}
+
+h1
+{
+  font-size: 56px;
+}
+
+button:hover
+{
+  cursor: pointer;
+}
