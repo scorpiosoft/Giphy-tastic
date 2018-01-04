@@ -62,7 +62,7 @@ var Giphytastic =
         // </div>
 
         card = $('<div class="col-sm-3">'
-            +'<div id="card"+i class="card mr-2 mb-2">'
+            +'<div id="card"+i class="card mb-2">'
             +'<div class="card-body">'
               +gif
               +'<p id="rating"'+i+' class="card-text text-center">Rating: '+response.data[i].rating.toUpperCase()+'</p>'
