@@ -4,7 +4,7 @@ var Giphytastic =
   d_buttons:    $("#buttons"),
   d_gifs:       $("#gifs"),
   // array of button names
-  buttons: ["Star Trek", "Star Wars", "The Matrix", "The Expanse", "Continuum"],
+  buttons: ["Star Trek", "Star Wars", "The Matrix", "The Expanse", "Continuum", "Dark Matter", "Agents of SHIELD", "The Magicians", "Stranger Things"],
   // GIF limit
   limit: 10,
   // current gifs
@@ -86,7 +86,7 @@ Giphytastic.d_buttons.on('click', 'button.subject', function()
 Giphytastic.d_gifs.on('click', 'img.giphy', function()
 {
   var num = this.id.slice(0, 1);
-  console.log("current img:", this, "num:", num);
+  console.log("img:", this, "num:", num);
 
   if (Giphytastic.cur_animating[num])
   {
@@ -98,7 +98,6 @@ Giphytastic.d_gifs.on('click', 'img.giphy', function()
     $('#'+this.id).attr('src', Giphytastic.cur_gifs[num].images.fixed_width.url);
     Giphytastic.cur_animating[num] = true;
   }
-  console.log("new img:", this);
 });
 
 //
