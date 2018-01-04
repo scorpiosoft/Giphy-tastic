@@ -7,6 +7,10 @@ var Giphytastic =
   buttons: ["Star Trek", "Star Wars", "The Matrix", "The Expanse", "Continuum"],
   // GIF limit
   limit: 10,
+  // current gifs
+  cur_gifs: null,
+  // currently animating - array to hold booleans
+  cur_animating: [false],
   // method to add a button
   add_button: function ()
   {
@@ -43,17 +47,20 @@ var Giphytastic =
     }).done(function(response)
     {
       console.log(response);
+      Giphytastic.cur_gifs = response.data;
 
       for (var i = 0; i < Giphytastic.limit; ++i)
       {
         gif = $('<img>',
           {
-            id:    'gif'+i,
+            id:    i+'gif',
             class: 'giphy',
             src:   response.data[i].images.fixed_width_still.url,
           });
         gif.css('margin', '0 20px 20px 0');
         Giphytastic.d_gifs.append(gif);
+        // set to not animating
+        Giphytastic.cur_animating[i] = false;
       }
     });
 
@@ -73,6 +80,25 @@ Giphytastic.display_all_buttons();
 Giphytastic.d_buttons.on('click', 'button.subject', function()
 {
   Giphytastic.random_gifs($(this).text());
+});
+
+// Click function for the start buttons
+Giphytastic.d_gifs.on('click', 'img.giphy', function()
+{
+  var num = this.id.slice(0, 1);
+  console.log("current img:", this, "num:", num);
+
+  if (Giphytastic.cur_animating[num])
+  {
+    // animating, load still
+    $('#'+this.id).attr('src', Giphytastic.cur_gifs[num].images.fixed_width_still.url);
+    Giphytastic.cur_animating[num] = false;
+  } else {
+    // not animating, load animation
+    $('#'+this.id).attr('src', Giphytastic.cur_gifs[num].images.fixed_width.url);
+    Giphytastic.cur_animating[num] = true;
+  }
+  console.log("new img:", this);
 });
 
 //
