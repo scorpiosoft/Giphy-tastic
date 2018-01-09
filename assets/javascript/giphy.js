@@ -5,7 +5,7 @@ var Giphytastic =
   d_form:       $("#form"),
   d_gifs:       $("#gifs"),
   // array of button names
-  buttons: ["Star Trek", "Star Wars", "The Matrix", "The Expanse", "Continuum", "Dark Matter", "Agents of SHIELD", "The Magicians", "Stranger Things"],
+  buttons: ["Doctor Who", "Star Trek", "Star Wars", "The Matrix", "The Expanse", "Continuum", "Dark Matter", "Agents of SHIELD", "The Magicians", "Stranger Things"],
   // GIF limit
   limit: 10,
   // current gifs
@@ -131,6 +131,9 @@ Giphytastic.d_form.on("click", 'button.submit', function(event)
   event.preventDefault();
   // grab the input from the textbox
   var subject = $("#subject_in").val().trim();
+  // make sure the user typed in something
+  if (subject.length <= 0)
+    return false;
   // add the button
   Giphytastic.add_button(subject);
   // now clear the form
